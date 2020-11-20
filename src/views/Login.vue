@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <span>login</span>
+    <h3 class="title">Login</h3>
 
     <a-form :model="formInline" @submit="handleSubmit">
       <a-form-item>
@@ -23,6 +23,12 @@
         </a-button>
       </a-form-item>
     </a-form>
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
   </div>
 </template>
 
@@ -54,5 +60,10 @@ export default {
   width: 500px;
   margin: 50px auto;
   text-align: left;
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    color: royalblue;
+  }
 }
 </style>
