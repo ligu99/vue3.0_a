@@ -1,7 +1,9 @@
 <template>
   <div class="register">
-    <h3>注册</h3>
-    <span @click="toLogin">去登录</span>
+    <h3 class="title">注册</h3>
+    <div class="form-wrap">
+      <div class="toreg" @click="toLogin">去登录</div>
+    </div>
   </div>
 </template>
 
@@ -24,5 +26,24 @@ export default {
   height: 100%;
   background: #212528;
   color: #fff;
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    color: royalblue;
+    text-align: center;
+    padding-top: 50px;
+  }
+  .form-wrap {
+    width: 300px;
+    margin: 0 auto;
+    label {
+      text-align: left;
+      color: #fff;
+    }
+  }
+  .toreg {
+    text-align: right;
+    cursor: pointer;
+  }
 }
 </style>

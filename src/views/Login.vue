@@ -46,7 +46,7 @@
           </a-form-item>
         </a-form>
         <div class="text">
-          <span>忘记密码</span>
+          <span @click="changeDisplayValue('fotget')">忘记密码</span>
           <span class="line"></span>
           <span @click="changeDisplayValue('register')">注册</span>
         </div>
@@ -56,7 +56,7 @@
       <register @update:changeDisplayValue="changeDisplayValue"></register>
     </div>
     <div class="forgetPw" v-else>
-      <span>忘记密码</span>
+      <forgetpw></forgetpw>
     </div>
   </div>
 </template>
@@ -66,13 +66,15 @@ import { onMounted, reactive, toRefs } from "vue";
 import { UserOutlined, LockOutlined, SafetyCertificateOutlined } from "@ant-design/icons-vue";
 import { validateUsername, validatePassword } from "@/utils/validate";
 import register from "./Register";
+import forgetpw from "./Forgetpw";
 export default {
   name: "Login",
   components: {
     UserOutlined,
     LockOutlined,
     SafetyCertificateOutlined,
-    register
+    register,
+    forgetpw
   },
   setup() {
     //用reactive定义响应数据
@@ -187,6 +189,8 @@ export default {
     text-align: center;
     letter-spacing: 2px;
     border-radius: 5px;
+    user-select: none;
+    cursor: pointer;
   }
 }
 </style>
