@@ -1,9 +1,9 @@
 <template>
   <div class="login">
-    <div class="loginBox" v-if="displayValue === 'login'">
+    <div class="loginBox" v-if="loginData.displayValue === 'login'">
       <h3 class="title">Login</h3>
       <div class="form-wrap">
-        <a-form :model="formData" :wrapper-col="{ span: 24 }" :rules="rules">
+        <a-form ref="loginForm" :model="formData" :wrapper-col="{ span: 24 }" :rules="rules">
           <label>账号：</label>
           <a-form-item name="username" required has-feedback>
             <a-input v-model:value="formData.username" placeholder="Username" autocomplete="off">
@@ -27,22 +27,22 @@
             </a-input>
           </a-form-item>
           <label>验证码：</label>
-          <a-form-item>
-            <a-row :gutter="16">
-              <a-col :span="18">
+          <a-row :gutter="16">
+            <a-col :span="18">
+              <a-form-item name="code" required has-feedback>
                 <a-input v-model:value="formData.code" placeholder="请输入验证码">
                   <template #prefix>
                     <SafetyCertificateOutlined style="color: rgba(0, 0, 0, 0.25)" />
                   </template>
                 </a-input>
-              </a-col>
-              <a-col class="gutter-row" :span="6">
-                <span class="code">{{ codeStr }}</span>
-              </a-col>
-            </a-row>
-          </a-form-item>
+              </a-form-item>
+            </a-col>
+            <a-col class="gutter-row" :span="6">
+              <span class="code">{{ loginData.codeStr }}</span>
+            </a-col>
+          </a-row>
           <a-form-item :wrapper-col="{ span: 24 }">
-            <a-button type="primary" block @click="handleSubmit"> 登录 </a-button>
+            <a-button type="primary" block @click="handleSubmit('loginForm')"> 登录 </a-button>
           </a-form-item>
         </a-form>
         <div class="text">
@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    <div class="regBox" v-else-if="displayValue === 'register'">
+    <div class="regBox" v-else-if="loginData.displayValue === 'register'">
       <register @update:changeDisplayValue="changeDisplayValue"></register>
     </div>
     <div class="forgetPw" v-else>
@@ -62,9 +62,9 @@
 </template>
 
 <script>
-import { onMounted, reactive, toRefs } from "vue";
+import { onMounted, reactive } from "vue";
 import { UserOutlined, LockOutlined, SafetyCertificateOutlined } from "@ant-design/icons-vue";
-import { validateUsername, validatePassword } from "@/utils/validate";
+import { validateUsername, validatePassword, validateCode } from "@/utils/validate";
 import register from "./Register";
 import forgetpw from "./Forgetpw";
 export default {
@@ -76,28 +76,34 @@ export default {
     register,
     forgetpw
   },
-  setup() {
+  setup(props, context) {
     //用reactive定义响应数据
     let formData = reactive({
       username: "",
       password: "",
       code: ""
     });
-    // 直接拿到数据里面的key,不需要再写外面的一层
+
     let loginData = reactive({
       codeStr: "",
       displayValue: "login"
     });
-    // toRefs 将响应式对象转换成普通对象
-    let resData = toRefs(loginData);
-
     // 生成验证码
     let getCode = () => {
       loginData.codeStr = "1234";
     };
 
-    let handleSubmit = () => {
-      console.log(formData);
+    // 登录
+    let handleSubmit = formname => {
+      console.log(formname);
+      context.refs[formname]
+        .validate()
+        .then(() => {
+          console.log("values", formData);
+        })
+        .catch(error => {
+          console.log("error", error);
+        });
     };
 
     let changeDisplayValue = value => {
@@ -128,7 +134,8 @@ export default {
 
     let rules = reactive({
       username: [{ validator: validateUsername, trigger: "blur" }],
-      password: [{ validator: validatePassword, trigger: "blur" }]
+      password: [{ validator: validatePassword, trigger: "blur" }],
+      code: [{ validator: validateCode, trigger: "blur" }]
     });
 
     // 挂载完成
@@ -140,7 +147,7 @@ export default {
       handleSubmit,
       changeDisplayValue,
       rules,
-      ...resData
+      loginData
     };
   }
 };
@@ -191,6 +198,9 @@ export default {
     border-radius: 5px;
     user-select: none;
     cursor: pointer;
+    height: 34px;
+    line-height: 34px;
+    transform: translateY(5px);
   }
 }
 </style>
