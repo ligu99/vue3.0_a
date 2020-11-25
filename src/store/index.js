@@ -4,7 +4,11 @@ export default createStore({
   state: {
     selectedKey: 1
   },
-  mutations: {},
+  mutations: {
+    changeKey(state, key) {
+      state.selectedKey = key;
+    }
+  },
   actions: {},
   modules: {}
 });

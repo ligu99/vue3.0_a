@@ -56,7 +56,7 @@
       <register @update:changeDisplayValue="changeDisplayValue"></register>
     </div>
     <div class="forgetPw" v-else>
-      <forgetpw></forgetpw>
+      <forgetpw @update:changeDisplayValue="changeDisplayValue"></forgetpw>
     </div>
   </div>
 </template>
