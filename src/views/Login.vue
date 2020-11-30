@@ -3,7 +3,7 @@
     <div class="loginBox" v-if="loginData.displayValue === 'login'">
       <h3 class="title">Login</h3>
       <div class="form-wrap">
-        <a-form ref="loginForm" :model="formData" :wrapper-col="{ span: 24 }" :rules="rules">
+        <a-form ref="loginForm" :model="formData" :wrapper-col="{ span: 24 }" :rules="rules" @finish="handleFinish">
           <label>账号：</label>
           <a-form-item name="username" required has-feedback>
             <a-input v-model:value="formData.username" placeholder="Username" autocomplete="off">
@@ -15,12 +15,7 @@
 
           <label>密码：</label>
           <a-form-item name="password" required has-feedback>
-            <a-input
-              v-model:value="formData.password"
-              type="password"
-              placeholder="Password"
-              autocomplete="off"
-            >
+            <a-input v-model:value="formData.password" type="password" placeholder="Password" autocomplete="off">
               <template #prefix>
                 <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
               </template>
@@ -42,10 +37,10 @@
             </a-col>
           </a-row>
           <a-form-item :wrapper-col="{ span: 24 }">
-            <a-button type="primary" block @click="handleSubmit('loginForm')"> 登录 </a-button>
+            <a-button type="primary" block html-type="handleFinish"> 登录 </a-button>
           </a-form-item>
         </a-form>
-        <div class="text">
+        <div class=" text">
           <span @click="changeDisplayValue('fotget')">忘记密码</span>
           <span class="line"></span>
           <span @click="changeDisplayValue('register')">注册</span>
@@ -76,7 +71,7 @@ export default {
     register,
     forgetpw
   },
-  setup(props, context) {
+  setup() {
     //用reactive定义响应数据
     let formData = reactive({
       username: "",
@@ -94,16 +89,8 @@ export default {
     };
 
     // 登录
-    let handleSubmit = formname => {
-      console.log(formname);
-      context.refs[formname]
-        .validate()
-        .then(() => {
-          console.log("values", formData);
-        })
-        .catch(error => {
-          console.log("error", error);
-        });
+    let handleFinish = () => {
+      console.log(formData);
     };
 
     let changeDisplayValue = value => {
@@ -144,10 +131,10 @@ export default {
     });
     return {
       formData,
-      handleSubmit,
       changeDisplayValue,
       rules,
-      loginData
+      loginData,
+      handleFinish
     };
   }
 };
