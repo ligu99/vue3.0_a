@@ -146,8 +146,8 @@ export default {
   background: #212528;
 }
 .title {
-  font-size: 24px;
   font-weight: 600;
+  font-size: 24px;
   color: royalblue;
   text-align: center;
   padding-top: 50px;
