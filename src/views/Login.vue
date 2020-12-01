@@ -100,7 +100,8 @@ export default {
       codeStr: "", //验证码
       displayValue: "login",
       getCodeText: "获取验证码",
-      disabled: false
+      disabled: false,
+      timer: null
     });
     // 生成验证码
     var code = () => {
@@ -120,13 +121,15 @@ export default {
       loginData.disabled = true;
       loginData.codeStr = code();
       let time = 5;
-      let timer = setInterval(() => {
-        loginData.getCodeText = `${time}S`;
+      loginData.getCodeText = `${time}S`;
+      loginData.timer = setInterval(() => {
         time--;
-        if (time < 0) {
+        if (time <= 0) {
           loginData.getCodeText = "获取验证码";
           loginData.disabled = false;
-          clearInterval(timer);
+          clearInterval(loginData.timer);
+        } else {
+          loginData.getCodeText = `${time}S`;
         }
       }, 1000);
     };
@@ -235,6 +238,7 @@ export default {
   .code {
     display: block;
     color: #58bc58;
+    font-weight: 600;
     background: #fff;
     text-align: center;
     letter-spacing: 2px;
