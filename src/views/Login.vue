@@ -76,7 +76,7 @@
 <script>
 import { onMounted, reactive } from "vue";
 import { UserOutlined, LockOutlined, SafetyCertificateOutlined } from "@ant-design/icons-vue";
-import { validateUsername, validatePassword, validateCode } from "@/utils/validate";
+import { validateUsername, validatePassword, RegCode } from "@/utils/validate";
 import register from "./Register";
 import forgetpw from "./Forgetpw";
 export default {
@@ -97,7 +97,7 @@ export default {
     });
 
     let loginData = reactive({
-      codeStr: "",
+      codeStr: "", //验证码
       displayValue: "login",
       getCodeText: "获取验证码",
       disabled: false
@@ -110,26 +110,26 @@ export default {
         const num = parseInt(Math.random() * str.length);
         code += str[num];
       }
-      return code
-    }
+      return code;
+    };
     let getCode = () => {
-      loginData.codeStr = code()
+      loginData.codeStr = code();
     };
 
     let handleGetCode = () => {
-      loginData.disabled = true
-      loginData.codeStr = code()
-      let time = 5
+      loginData.disabled = true;
+      loginData.codeStr = code();
+      let time = 5;
       let timer = setInterval(() => {
         loginData.getCodeText = `${time}S`;
         time--;
         if (time < 0) {
-          clearInterval(timer)
           loginData.getCodeText = "获取验证码";
           loginData.disabled = false;
+          clearInterval(timer);
         }
       }, 1000);
-    }
+    };
 
     // 登录
     let handleFinish = () => {
@@ -161,6 +161,18 @@ export default {
     //     return Promise.resolve();
     //   }
     // };
+
+    let validateCode = async (rule, value) => {
+      if (value === "") {
+        return Promise.reject("请输入验证码");
+      } else if (!RegCode(value)) {
+        return Promise.reject("验证码格式错误");
+      } else if (value.toUpperCase() === loginData.codeStr.toUpperCase()) {
+        return Promise.resolve();
+      } else {
+        return Promise.reject("验证码错误");
+      }
+    };
 
     let rules = reactive({
       username: [{ validator: validateUsername, trigger: "blur" }],

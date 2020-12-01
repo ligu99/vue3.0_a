@@ -20,13 +20,7 @@ export async function validatePassword(rule, value) {
   }
 }
 
-export async function validateCode(rule, value) {
+export function RegCode(value) {
   let reg = /^(\w){4}$/;
-  if (value === "") {
-    return Promise.reject("请输入验证码");
-  } else if (!reg.test(value)) {
-    return Promise.reject("验证码格式错误");
-  } else {
-    return Promise.resolve();
-  }
+  return reg.test(value);
 }
