@@ -3,7 +3,13 @@
     <div class="loginBox" v-if="loginData.displayValue === 'login'">
       <h3 class="title">Login</h3>
       <div class="form-wrap">
-        <a-form ref="loginForm" :model="formData" :wrapper-col="{ span: 24 }" :rules="rules" @finish="handleFinish">
+        <a-form
+          ref="loginForm"
+          :model="formData"
+          :wrapper-col="{ span: 24 }"
+          :rules="rules"
+          @finish="handleFinish"
+        >
           <label>账号：</label>
           <a-form-item name="username" required has-feedback>
             <a-input v-model:value="formData.username" placeholder="Username" autocomplete="off">
@@ -15,7 +21,12 @@
 
           <label>密码：</label>
           <a-form-item name="password" required has-feedback>
-            <a-input v-model:value="formData.password" type="password" placeholder="Password" autocomplete="off">
+            <a-input
+              v-model:value="formData.password"
+              type="password"
+              placeholder="Password"
+              autocomplete="off"
+            >
               <template #prefix>
                 <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
               </template>
@@ -36,6 +47,12 @@
               <span class="code">{{ loginData.codeStr }}</span>
             </a-col>
           </a-row>
+          <!-- 获取验证码 -->
+          <a-form-item :wrapper-col="{ span: 24 }">
+            <a-button block @click="handleGetCode" :disabled="loginData.disabled">
+              {{ loginData.getCodeText }}
+            </a-button>
+          </a-form-item>
           <a-form-item :wrapper-col="{ span: 24 }">
             <a-button type="primary" block html-type="handleFinish"> 登录 </a-button>
           </a-form-item>
@@ -81,12 +98,38 @@ export default {
 
     let loginData = reactive({
       codeStr: "",
-      displayValue: "login"
+      displayValue: "login",
+      getCodeText: "获取验证码",
+      disabled: false
     });
     // 生成验证码
+    var code = () => {
+      let str = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+      let code = "";
+      for (let i = 0; i < 4; i++) {
+        const num = parseInt(Math.random() * str.length);
+        code += str[num];
+      }
+      return code
+    }
     let getCode = () => {
-      loginData.codeStr = "1234";
+      loginData.codeStr = code()
     };
+
+    let handleGetCode = () => {
+      loginData.disabled = true
+      loginData.codeStr = code()
+      let time = 5
+      let timer = setInterval(() => {
+        loginData.getCodeText = `${time}S`;
+        time--;
+        if (time < 0) {
+          clearInterval(timer)
+          loginData.getCodeText = "获取验证码";
+          loginData.disabled = false;
+        }
+      }, 1000);
+    }
 
     // 登录
     let handleFinish = () => {
@@ -134,7 +177,8 @@ export default {
       changeDisplayValue,
       rules,
       loginData,
-      handleFinish
+      handleFinish,
+      handleGetCode
     };
   }
 };
@@ -184,10 +228,9 @@ export default {
     letter-spacing: 2px;
     border-radius: 5px;
     user-select: none;
-    cursor: pointer;
     height: 34px;
     line-height: 34px;
-    transform: translateY(5px);
+    transform: translateY(3px);
   }
 }
 </style>
