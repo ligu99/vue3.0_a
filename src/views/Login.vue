@@ -79,6 +79,7 @@ import { UserOutlined, LockOutlined, SafetyCertificateOutlined } from "@ant-desi
 import { validateUsername, validatePassword, RegCode } from "@/utils/validate";
 import register from "./Register";
 import forgetpw from "./Forgetpw";
+import axios from "axios";
 export default {
   name: "Login",
   components: {
@@ -186,6 +187,13 @@ export default {
     // 挂载完成
     onMounted(() => {
       getCode();
+      axios({
+        url: "https://api.coindesk.com/v1/bpi/currentprice.json",
+        methods: "get",
+        timeout: 5000
+      }).then(response => {
+        console.log(response);
+      });
     });
     return {
       formData,
