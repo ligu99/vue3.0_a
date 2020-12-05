@@ -122,50 +122,47 @@ export default {
     //   }
     //   return code;
     // };
-    let getCode = () => {
+    // let getCode = () => {
+    // axios({
+    //   method: "post",
+    //   url: "/getSms/",
+    //   timeout: 5000,
+    //   data: {
+    //     username: "415946604@qq.com",
+    //     module: "login"
+    //   }
+    // }).then(response => {
+    //   console.log(response.data);
+    //   loginData.codeStr = response.data.message.slice(-6);
+    // });
+    // };
+
+    let handleGetCode = async () => {
       if (formData.username) {
-        getCodeApi({
+        let { data } = await getCodeApi({
           url: "/getSms/",
           data: {
             username: formData.username,
             module: "login"
           }
-        }).then(res => {
-          console.log(res.data);
-          loginData.codeStr = res.data.message.slice(-6);
         });
+        loginData.codeStr = data.message.slice(-6);
+        //倒计时点击
+        let time = 5;
+        loginData.getCodeText = `${time}S`;
+        loginData.timer = setInterval(() => {
+          time--;
+          if (time <= 0) {
+            loginData.getCodeText = "获取验证码";
+            loginData.disabled = false;
+            clearInterval(loginData.timer);
+          } else {
+            loginData.getCodeText = `${time}S`;
+          }
+        }, 1000);
       } else {
         message.warning("邮箱不能为空");
       }
-      // axios({
-      //   method: "post",
-      //   url: "/getSms/",
-      //   timeout: 5000,
-      //   data: {
-      //     username: "415946604@qq.com",
-      //     module: "login"
-      //   }
-      // }).then(response => {
-      //   console.log(response.data);
-      //   loginData.codeStr = response.data.message.slice(-6);
-      // });
-    };
-
-    let handleGetCode = () => {
-      loginData.disabled = true;
-      getCode();
-      let time = 5;
-      loginData.getCodeText = `${time}S`;
-      loginData.timer = setInterval(() => {
-        time--;
-        if (time <= 0) {
-          loginData.getCodeText = "获取验证码";
-          loginData.disabled = false;
-          clearInterval(loginData.timer);
-        } else {
-          loginData.getCodeText = `${time}S`;
-        }
-      }, 1000);
     };
 
     // 登录
