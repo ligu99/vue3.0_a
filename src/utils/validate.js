@@ -21,6 +21,6 @@ export async function validatePassword(rule, value) {
 }
 
 export function RegCode(value) {
-  let reg = /^(\w){4}$/;
+  let reg = /^(\w){6}$/;
   return reg.test(value);
 }

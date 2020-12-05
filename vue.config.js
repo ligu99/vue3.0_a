@@ -17,5 +17,17 @@ module.exports = {
         prependData: `@import "~@/assets/variables.scss";`
       }
     }
+  },
+
+  devServer: {
+    proxy: {
+      '/devApi': {
+        target: 'http://www.web-jshtml.cn/productapi',
+        changeOrigin: true, //允许跨域
+        pathRewrite: {
+          '^/devApi': ''
+        }
+      }
+    }
   }
 };

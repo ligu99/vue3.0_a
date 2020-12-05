@@ -34,7 +34,7 @@
           </a-form-item>
           <label>验证码：</label>
           <a-row :gutter="16">
-            <a-col :span="18">
+            <a-col :span="12">
               <a-form-item name="code" required has-feedback>
                 <a-input v-model:value="formData.code" placeholder="请输入验证码">
                   <template #prefix>
@@ -43,18 +43,20 @@
                 </a-input>
               </a-form-item>
             </a-col>
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="12">
               <span class="code">{{ loginData.codeStr }}</span>
             </a-col>
           </a-row>
           <!-- 获取验证码 -->
           <a-form-item :wrapper-col="{ span: 24 }">
-            <a-button block @click="handleGetCode" :disabled="loginData.disabled">
-              {{ loginData.getCodeText }}
-            </a-button>
+            <a-button
+              block
+              @click="handleGetCode"
+              :disabled="loginData.disabled"
+            >{{ loginData.getCodeText }}</a-button>
           </a-form-item>
           <a-form-item :wrapper-col="{ span: 24 }">
-            <a-button type="primary" block html-type="handleFinish"> 登录 </a-button>
+            <a-button type="primary" block html-type="handleFinish">登录</a-button>
           </a-form-item>
         </a-form>
         <div class="text">
@@ -75,11 +77,16 @@
 
 <script>
 import { onMounted, reactive } from "vue";
-import { UserOutlined, LockOutlined, SafetyCertificateOutlined } from "@ant-design/icons-vue";
+import {
+  UserOutlined,
+  LockOutlined,
+  SafetyCertificateOutlined
+} from "@ant-design/icons-vue";
+import { message } from "ant-design-vue";
 import { validateUsername, validatePassword, RegCode } from "@/utils/validate";
 import register from "./Register";
 import forgetpw from "./Forgetpw";
-import axios from "axios";
+import { getCodeApi } from "@/api/login";
 export default {
   name: "Login",
   components: {
@@ -98,29 +105,55 @@ export default {
     });
 
     let loginData = reactive({
-      codeStr: "", //验证码
+      codeStr: "点击下方获取", //验证码
       displayValue: "login",
       getCodeText: "获取验证码",
       disabled: false,
       timer: null
     });
     // 生成验证码
-    var code = () => {
-      let str = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
-      let code = "";
-      for (let i = 0; i < 4; i++) {
-        const num = parseInt(Math.random() * str.length);
-        code += str[num];
-      }
-      return code;
-    };
+    // var code = () => {
+    //   let str =
+    //     "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+    //   let code = "";
+    //   for (let i = 0; i < 4; i++) {
+    //     const num = parseInt(Math.random() * str.length);
+    //     code += str[num];
+    //   }
+    //   return code;
+    // };
     let getCode = () => {
-      loginData.codeStr = code();
+      if (formData.username) {
+        getCodeApi({
+          url: "/getSms/",
+          data: {
+            username: formData.username,
+            module: "login"
+          }
+        }).then(res => {
+          console.log(res.data);
+          loginData.codeStr = res.data.message.slice(-6);
+        });
+      } else {
+        message.warning("邮箱不能为空");
+      }
+      // axios({
+      //   method: "post",
+      //   url: "/getSms/",
+      //   timeout: 5000,
+      //   data: {
+      //     username: "415946604@qq.com",
+      //     module: "login"
+      //   }
+      // }).then(response => {
+      //   console.log(response.data);
+      //   loginData.codeStr = response.data.message.slice(-6);
+      // });
     };
 
     let handleGetCode = () => {
       loginData.disabled = true;
-      loginData.codeStr = code();
+      getCode();
       let time = 5;
       loginData.getCodeText = `${time}S`;
       loginData.timer = setInterval(() => {
@@ -185,16 +218,7 @@ export default {
     });
 
     // 挂载完成
-    onMounted(() => {
-      getCode();
-      axios({
-        url: "https://api.coindesk.com/v1/bpi/currentprice.json",
-        methods: "get",
-        timeout: 5000
-      }).then(response => {
-        console.log(response);
-      });
-    });
+    onMounted(() => {});
     return {
       formData,
       changeDisplayValue,
