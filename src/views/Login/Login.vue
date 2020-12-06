@@ -90,6 +90,7 @@ import { validateUsername, validatePassword, RegCode } from "@/utils/validate";
 import register from "./Register";
 import forgetpw from "./Forgetpw";
 import { getCodeApi, postApi } from "@/api/login";
+import md5 from "md5";
 export default {
   name: "Login",
   components: {
@@ -262,7 +263,10 @@ export default {
     });
 
     // 挂载完成
-    onMounted(() => { });
+    onMounted(() => {
+      // md5加密
+      console.log(md5("12345678"));//25d55ad283aa400af464c76d713c07ad
+    });
     return {
       formData,
       changeDisplayValue,
