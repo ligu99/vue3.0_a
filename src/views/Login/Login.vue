@@ -67,9 +67,11 @@
         </div>
       </div>
     </div>
+    <!-- 注册 -->
     <div class="regBox" v-else-if="loginData.displayValue === 'register'">
       <register @update:changeDisplayValue="changeDisplayValue"></register>
     </div>
+    <!-- 忘记密码 -->
     <div class="forgetPw" v-else>
       <forgetpw @update:changeDisplayValue="changeDisplayValue"></forgetpw>
     </div>
@@ -207,11 +209,12 @@ export default {
 
     // 登录
     let handleFinish = async () => {
-      let res = await postApi({
+      let { data } = await postApi({
         url: "/login/",
         data: formData
       })
-      console.log(res);
+      // console.log(data);
+      message.success(data.message);
     };
 
     let changeDisplayValue = value => {
