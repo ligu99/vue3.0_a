@@ -4,3 +4,8 @@ export function getCodeApi(params) {
     const { url, data } = params;
     return request.post(url, data);
 }
+
+export function postApi(params) {
+    const { url, data } = params;
+    return request.post(url, data);
+}

@@ -9,6 +9,7 @@
           :wrapper-col="{ span: 24 }"
           :rules="rules"
           @finish="handleFinish"
+          key="loginForm"
         >
           <label>账号：</label>
           <a-form-item name="username" required has-feedback>
@@ -86,7 +87,7 @@ import { message } from "ant-design-vue";
 import { validateUsername, validatePassword, RegCode } from "@/utils/validate";
 import register from "./Register";
 import forgetpw from "./Forgetpw";
-import { getCodeApi } from "@/api/login";
+import { getCodeApi, postApi } from "@/api/login";
 export default {
   name: "Login",
   components: {
@@ -96,7 +97,8 @@ export default {
     register,
     forgetpw
   },
-  setup() {
+  setup(props, context) {
+    console.log(props, context)
     //用reactive定义响应数据
     let formData = reactive({
       username: "",
@@ -137,37 +139,79 @@ export default {
     // });
     // };
 
+    let timeClick = () => {
+      let time = 5;
+      loginData.getCodeText = `${time}S`;
+      loginData.timer = setInterval(() => {
+        time--;
+        if (time <= 0) {
+          loginData.getCodeText = "获取验证码";
+          loginData.disabled = false;
+          clearInterval(loginData.timer);
+        } else {
+          loginData.getCodeText = `${time}S`;
+        }
+      }, 1000);
+    };
+
     let handleGetCode = async () => {
-      if (formData.username) {
-        let { data } = await getCodeApi({
-          url: "/getSms/",
-          data: {
-            username: formData.username,
-            module: "login"
-          }
-        });
-        loginData.codeStr = data.message.slice(-6);
-        //倒计时点击
-        let time = 5;
-        loginData.getCodeText = `${time}S`;
-        loginData.timer = setInterval(() => {
-          time--;
-          if (time <= 0) {
-            loginData.getCodeText = "获取验证码";
-            loginData.disabled = false;
-            clearInterval(loginData.timer);
-          } else {
-            loginData.getCodeText = `${time}S`;
-          }
-        }, 1000);
+      let reg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+      if (reg.test(formData.username)) {
+        // 方式一
+        // getCodeApi({
+        //   url: "/getSms/",
+        //   data: {
+        //     username: formData.username,
+        //     module: "login"
+        //   }
+        // }).then(data => {
+        //   console.log(data);
+        // }).catch(err => {
+        //   console.log(err);
+        // });
+
+        // 方式二
+        // let { data } = await getCodeApi({
+        //   url: "/getSms/",
+        //   data: {
+        //     username: formData.username,
+        //     module: "login"
+        //   }
+        // });
+        // loginData.codeStr = data.message.slice(-6);
+        // loginData.disabled = true;
+        // //倒计时点击
+        // timeClick();
+
+        // 由于await对失败不关心不处理，可以用下面方式
+        // await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中。
+        try {
+          let { data } = await getCodeApi({
+            url: "/getSms/",
+            data: {
+              username: formData.username,
+              module: "login"
+            }
+          });
+          loginData.codeStr = data.message.slice(-6);
+          loginData.disabled = true;
+          //倒计时点击
+          timeClick();
+        } catch (err) {
+          console.log("err", err);
+        }
       } else {
-        message.warning("邮箱不能为空");
+        message.warning("请输入正确的邮箱地址");
       }
     };
 
     // 登录
-    let handleFinish = () => {
-      console.log(formData);
+    let handleFinish = async () => {
+      let res = await postApi({
+        url: "/login/",
+        data: formData
+      })
+      console.log(res);
     };
 
     let changeDisplayValue = value => {
@@ -215,7 +259,7 @@ export default {
     });
 
     // 挂载完成
-    onMounted(() => {});
+    onMounted(() => { });
     return {
       formData,
       changeDisplayValue,

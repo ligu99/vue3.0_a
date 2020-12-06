@@ -24,10 +24,10 @@ instance.interceptors.request.use(function (config) {
 // 每一次拿到数据都需要经过这里 - 添加响应拦截器
 instance.interceptors.response.use(function (response) {
     // 对响应数据做点什么
-    let { resCode } = response.data;
-    if (resCode !== 0) {
-        message.error('请求失败');
-        return Promise.reject(response);
+    let { data } = response;
+    if (data.resCode !== 0) {
+        message.error(data.message);
+        return Promise.reject(data);
     } else {
         return response;
     }
