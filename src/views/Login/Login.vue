@@ -80,6 +80,7 @@
 
 <script>
 import { onMounted, reactive } from "vue";
+import { useRouter } from "vue-router";
 import {
   UserOutlined,
   LockOutlined,
@@ -208,6 +209,8 @@ export default {
       }
     };
 
+    // 路由
+    let router = useRouter();
     // 登录
     let handleFinish = async () => {
       let { data } = await postApi({
@@ -215,7 +218,9 @@ export default {
         data: formData
       })
       // console.log(data);
+      // 因为失败的情况已经被拦截器拦截，所以只有登录成功才会执行以下代码
       message.success(data.message);
+      router.push("/home");
     };
 
     let changeDisplayValue = value => {
