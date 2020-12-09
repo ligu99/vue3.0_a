@@ -27,6 +27,13 @@ module.exports = {
         pathRewrite: {
           '^/devApi': ''
         }
+      },
+      "/v1": {
+        target: 'https://wwwtest.ctyun.cn:21443',
+        changeOrigin: true, //允许跨域
+        pathRewrite: {
+          '^/v1': ''
+        }
       }
     }
   }
