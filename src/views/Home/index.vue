@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { getApi } from "@/api/login";
+import { getApi } from "@/api/base";
 export default {
   setup() {
     let click = () => {
