@@ -31,7 +31,7 @@ module.exports = {
         }
       },
       "/v1": {
-        target: 'https://wwwtest.ctyun.cn:21443',
+        target: 'https://www.ctyun.cn',
         changeOrigin: true, //允许跨域
         pathRewrite: {
           '^/v1': ''
