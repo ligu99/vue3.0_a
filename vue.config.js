@@ -1,5 +1,7 @@
 // vue.config.js
 module.exports = {
+  // 关闭语法检测
+  // lintOnSave: false,有错误也不会报，不推荐
   // 选项...
   publicPath: process.env.NODE_ENV === "production" ? "" : "/",
   // https://cli.vuejs.org/zh/guide/css.html#css-modules

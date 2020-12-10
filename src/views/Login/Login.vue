@@ -50,11 +50,9 @@
           </a-row>
           <!-- 获取验证码 -->
           <a-form-item :wrapper-col="{ span: 24 }">
-            <a-button
-              block
-              @click="handleGetCode"
-              :disabled="loginData.disabled"
-            >{{ loginData.getCodeText }}</a-button>
+            <a-button block @click="handleGetCode" :disabled="loginData.disabled">
+              {{ loginData.getCodeText }}
+            </a-button>
           </a-form-item>
           <a-form-item :wrapper-col="{ span: 24 }">
             <a-button type="primary" block html-type="handleFinish">登录</a-button>
@@ -102,7 +100,7 @@ export default {
     forgetpw
   },
   setup(props, context) {
-    console.log(props, context)
+    console.log(props, context);
     //用reactive定义响应数据
     let formData = reactive({
       username: "",
@@ -216,7 +214,7 @@ export default {
       let { data } = await postApi({
         url: "/login/",
         data: formData
-      })
+      });
       // console.log(data);
       // 因为失败的情况已经被拦截器拦截，所以只有登录成功才会执行以下代码
       message.success(data.message);
