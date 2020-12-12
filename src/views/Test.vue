@@ -9,9 +9,7 @@
           v-for="item in formData.cpc_ebs_type.list"
           :key="item.id"
           @click="seletType(item.id)"
-        >
-          {{ item.name }}
-        </li>
+        >{{ item.name }}</li>
       </ul>
       <div>
         <a-input-number
@@ -33,8 +31,12 @@
         />
         数据盘：{{ formData.volumes }}
       </div>
-      <div>原价：{{ priceData.originalTotal }}</div>
-      <div>优惠价：{{ priceData.total }}</div>
+      <div>原价：{{ moneyFormat(priceData.originalTotal) }}</div>
+      <div>优惠价：{{ moneyFormat(priceData.total) }}</div>
+      <div>
+        测试正则：
+        <a-input v-model:value="testData.regValue" @change="changestr" placeholder="Basic usage" />
+      </div>
     </div>
   </div>
 </template>
@@ -52,6 +54,10 @@ export default {
     });
 
     let loading = ref(true);
+
+    let testData = reactive({
+      regValue: ''
+    });
 
     let priAttr = computed(() => {
       return {
@@ -113,6 +119,25 @@ export default {
         // console.log(priceData);
       });
     };
+    let changestr = () => {
+      console.log(testData.regValue)
+      // const strRegex = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(www\.)?(ctyun){1}(\.cn\/){1}/;
+      const strRegex = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(www\.)?(ctyun){1}(\.cn)(?=\/|$)/;//如果有/就得匹配，没/就不匹配；.cna .cnb .cnx 不符合
+      let re = new RegExp(strRegex);
+      console.log(re.test(testData.regValue))
+    };
+    //格式化价格 
+    let moneyFormat = (val) => {
+      console.log(val)
+      val = val / 100;
+      if (val.toString().indexOf('.') !== -1) {//带小数点
+        let b = val.toLocaleString();
+        return b;
+      } else {//不带小数点
+        let c = val.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+        return `${c}.00`;
+      }
+    };
     onMounted(() => {
       console.log("onMounted");
       getAttr();
@@ -123,7 +148,10 @@ export default {
       seletType,
       getPrice,
       priceData,
-      loading
+      loading,
+      testData,
+      changestr,
+      moneyFormat
     };
   }
 }
