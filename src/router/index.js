@@ -19,7 +19,7 @@ const routes = [
   {
     path: '/console',
     name: 'Console',
-    component: () => import(/* webpackChunkName: "console" */ '@/views/Console/layout.vue'),
+    component: () => import(/* webpackChunkName: "console" */ '@/views/Layout/layout.vue'),
     children: [
       {
         path: 'index',
@@ -27,18 +27,42 @@ const routes = [
         component: () => import(/* webpackChunkName: "console.index" */ '@/views/Console/index.vue'),
       },
       {
-        path: 'userlist',
-        name: "Console.userlist",
-        component: () => import(/* webpackChunkName: "console.user" */ '@/views/Usermanage/user.vue'),
-      },
-      {
-        path: 'mselist',
-        name: "Console.mselist",
-        component: () => import(/* webpackChunkName: "console.mse" */ '@/views/Msemanage/mse.vue'),
-      },
-      {
         path: '',
         redirect: "/console/index"
+      }
+    ]
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: () => import(/* webpackChunkName: "User" */ '@/views/Layout/layout.vue'),
+    children: [
+      {
+        path: 'index',
+        name: "User.index",
+        component: () => import(/* webpackChunkName: "user.index" */ '@/views/Usermanage/index.vue'),
+      },
+      {
+        path: 'userlist',
+        name: "User.userlist",
+        component: () => import(/* webpackChunkName: "user.user" */ '@/views/Usermanage/user.vue'),
+      }
+    ]
+  },
+  {
+    path: '/mse',
+    name: 'Mse',
+    component: () => import(/* webpackChunkName: "Mse" */ '@/views/Layout/layout.vue'),
+    children: [
+      {
+        path: 'index',
+        name: "Mse.index",
+        component: () => import(/* webpackChunkName: "mse.index" */ '@/views/Msemanage/index.vue'),
+      },
+      {
+        path: 'meslist',
+        name: "Mse.userlist",
+        component: () => import(/* webpackChunkName: "mse.mse" */ '@/views/Msemanage/mse.vue'),
       }
     ]
   },

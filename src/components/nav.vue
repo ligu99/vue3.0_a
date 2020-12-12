@@ -9,7 +9,7 @@
       :inlineCollapsed="navKeys.collapsed"
       @select="selectKey"
     >
-      <div v-for="item in menuData" :key="item.key">
+      <template v-for="item in menuData">
         <a-sub-menu v-if="item.list" :key="item.key">
           <template #title>
             <span>
@@ -23,7 +23,7 @@
           <DesktopOutlined />
           <span>{{item.name}}</span>
         </a-menu-item>
-      </div>
+      </template>
     </a-menu>
   </div>
 </template>
@@ -43,45 +43,45 @@ export default {
       collapsed: false
     });
     let menuData = reactive([
-      { name: "首页", key: "index" },
+      { name: "首页", key: "Console.index" },
       {
         name: "用户管理",
         key: "user",
         list: [
-          { name: "用户列表", key: "userlist" },
-          { name: "控制台2-2", key: "msg1" },
-          { name: "控制台2-3", key: "msg2" }
+          { name: "用户首页", key: "User.index" },
+          { name: "用户列表", key: "User.userlist" }
         ]
       },
       {
         name: "消息管理",
         key: "mes",
         list: [
-          { name: "消息列表", key: "mselist" },
-          { name: "控制台3-2", key: "user1" }
+          { name: "消息首页", key: "Mse.index" },
+          { name: "消息列表", key: "Mse.userlist" }
         ]
       }
     ]);
     let router = useRouter();
     let selectKey = ({ item, key, selectedKeys }) => {
       console.log(item, key, selectedKeys)
-      router.push(`/console/${key}`);
+      router.push({ name: key });
     };
     onMounted(() => {
       // 刷新高亮当前菜单,如果高亮的是子菜单，则展开对应的一级菜单
-      let curPath = router.currentRoute._value.fullPath;
+      // console.log(router)
+      let curPath = router.currentRoute._value.name;
       menuData.map(item => {
         // console.log(item)
         if (item.list) {
           item.list.filter(m => {
-            if (`/console/${m.key}` === curPath) {
+            if (m.key === curPath) {
               navKeys.openKeys.push(item.key);
               navKeys.selectedKeys.push(m.key)
               return m;
             }
           })
         } else {
-          if (`/console/${item.key}` === curPath) {
+          if (item.key === curPath) {
             navKeys.selectedKeys.push(item.key)
           }
         }
