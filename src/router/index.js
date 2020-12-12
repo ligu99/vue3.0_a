@@ -2,6 +2,15 @@ import { createRouter, createWebHistory } from 'vue-router';
 // import Home from '../views/Home.vue';
 
 const routes = [
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: Home
+  // },
+  {
+    path: '/',
+    redirect: '/login'
+  },
   {
     path: '/login',
     name: 'login',
@@ -10,27 +19,28 @@ const routes = [
   {
     path: '/console',
     name: 'Console',
-    component: () => import(/* webpackChunkName: "console" */ '@/views/Console/index.vue'),
+    component: () => import(/* webpackChunkName: "console" */ '@/views/Console/layout.vue'),
     children: [
       {
-        path: 'user',
-        name: "Console.user",
-        component: () => import(/* webpackChunkName: "user" */ '@/views/Console/user.vue'),
+        path: 'index',
+        name: "Console.index",
+        component: () => import(/* webpackChunkName: "console.index" */ '@/views/Console/index.vue'),
       },
       {
-        path: 'msg',
-        name: "Console.msg",
-        component: () => import(/* webpackChunkName: "msg" */ '@/views/Console/msg.vue'),
+        path: 'userlist',
+        name: "Console.userlist",
+        component: () => import(/* webpackChunkName: "console.user" */ '@/views/Usermanage/user.vue'),
+      },
+      {
+        path: 'mselist',
+        name: "Console.mselist",
+        component: () => import(/* webpackChunkName: "console.mse" */ '@/views/Msemanage/mse.vue'),
       },
       {
         path: '',
-        redirect: "/console/user"
+        redirect: "/console/index"
       }
     ]
-  },
-  {
-    path: '/',
-    redirect: '/login'
   },
   {
     path: '/about',
@@ -45,11 +55,15 @@ const routes = [
     name: 'Test',
     component: () => import(/* webpackChunkName: "test" */ '@/views/Test.vue')
   },
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
-  // },
+  {
+    name: '404',
+    path: '/404',
+    component: () => import(/* webpackChunkName: "404" */ '@/views/notFound.vue')
+  },
+  {
+    path: '/:pathMatch(.*)',    // 此处需特别注意至于最底部,这里 vue3.0 写*报错
+    redirect: '/404'
+  }
 ];
 
 const router = createRouter({

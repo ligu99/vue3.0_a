@@ -1,5 +1,5 @@
 <template>
-  <div>msg</div>
+  <div>mse</div>
 </template>
 
 <script>
