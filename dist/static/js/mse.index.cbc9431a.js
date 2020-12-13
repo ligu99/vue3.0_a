@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["mse.index"],{"861d6":function(e,n,c){"use strict";c.r(n);var o=c("7a23");function r(e,n,c,r,t,a){return Object(o["openBlock"])(),Object(o["createBlock"])("div",null,"信息首页")}var t={};t.render=r;n["default"]=t}}]);
-//# sourceMappingURL=mse.index.cbc9431a.js.map
