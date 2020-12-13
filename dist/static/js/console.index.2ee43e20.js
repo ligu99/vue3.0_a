@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["console.index"],{"545c":function(e,n,c){"use strict";c.r(n);var o=c("7a23");function r(e,n,c,r,t,a){return Object(o["openBlock"])(),Object(o["createBlock"])("div",null,"控制台首页")}var t={};t.render=r;n["default"]=t}}]);
+//# sourceMappingURL=console.index.2ee43e20.js.map

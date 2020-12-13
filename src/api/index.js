@@ -3,8 +3,8 @@ import axios from "axios";
 
 const isDev = process.env.NODE_ENV === 'development';
 
-// const baseUrl = isDev ? '/devApi' : '';
-const baseUrl = isDev ? '' : '';
+const baseUrl = isDev ? '/devApi' : 'http://119.23.142.232:12032/devApi';
+// const baseUrl = isDev ? '' : '';
 
 const instance = axios.create({
     baseURL: baseUrl

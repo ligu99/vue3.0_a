@@ -3,7 +3,11 @@ module.exports = {
   // 关闭语法检测
   // lintOnSave: false,有错误也不会报，不推荐
   // 选项...
-  publicPath: process.env.NODE_ENV === "production" ? "" : "/",
+  // publicPath用./ 在生产环境有问题，改成../../正常
+  publicPath: process.env.NODE_ENV === "production" ? "../../" : "/",
+  outputDir: "dist",
+  assetsDir: "static",
+  indexPath: 'index.html',
   // https://cli.vuejs.org/zh/guide/css.html#css-modules
   css: {
     loaderOptions: {

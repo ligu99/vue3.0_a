@@ -101,8 +101,8 @@ export default {
     register,
     forgetpw
   },
-  setup(props, context) {
-    console.log(props, context);
+  setup() {
+    // console.log(props, context);
     //用reactive定义响应数据
     let formData = reactive({
       username: "",
@@ -191,7 +191,7 @@ export default {
         // await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中。
         try {
           let { data } = await getCodeApi({
-            url: "/devApi/getSms/",
+            url: "/getSms/",
             data: {
               username: formData.username,
               module: "login"
@@ -214,7 +214,7 @@ export default {
     // 登录
     let handleFinish = async () => {
       let { data } = await postApi({
-        url: "/devApi/login/",
+        url: "/login/",
         data: formData
       });
       // console.log(data);
@@ -270,7 +270,7 @@ export default {
     // 挂载完成
     onMounted(() => {
       // md5加密
-      console.log(md5("12345678"));//25d55ad283aa400af464c76d713c07ad
+      console.log("md5", md5("12345678"));//25d55ad283aa400af464c76d713c07ad
     });
     return {
       formData,
