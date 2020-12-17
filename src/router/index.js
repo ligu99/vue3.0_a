@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 // import Home from '../views/Home.vue';
-
+const Layout = () =>import(/* webpackeChunkName: "layout" */ '@/views/Layout/layout.vue');
 const routes = [
   // {
   //   path: '/',
@@ -19,7 +19,8 @@ const routes = [
   {
     path: '/console',
     name: 'Console',
-    component: () => import(/* webpackChunkName: "console" */ '@/views/Layout/layout.vue'),
+    // component: () => import(/* webpackChunkName: "console" */ '@/views/Layout/layout.vue'),
+    component:Layout,
     children: [
       {
         path: 'index',
@@ -35,7 +36,8 @@ const routes = [
   {
     path: '/user',
     name: 'User',
-    component: () => import(/* webpackChunkName: "User" */ '@/views/Layout/layout.vue'),
+    // component: () => import(/* webpackChunkName: "User" */ '@/views/Layout/layout.vue'),
+    component:Layout,
     children: [
       {
         path: 'index',
@@ -52,7 +54,8 @@ const routes = [
   {
     path: '/mse',
     name: 'Mse',
-    component: () => import(/* webpackChunkName: "Mse" */ '@/views/Layout/layout.vue'),
+    // component: () => import(/* webpackChunkName: "Mse" */ '@/views/Layout/layout.vue'),
+    component:Layout,
     children: [
       {
         path: 'index',
