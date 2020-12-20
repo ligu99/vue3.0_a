@@ -92,6 +92,7 @@ import register from "./Register";
 import forgetpw from "./Forgetpw";
 import { getCodeApi, postApi } from "@/api/login";
 import md5 from "md5";
+import { useStore } from "vuex";
 export default {
   name: "Login",
   components: {
@@ -209,6 +210,8 @@ export default {
       }
     };
 
+    // vuex
+    let store = useStore();
     // 路由
     let router = useRouter();
     // 登录
@@ -220,6 +223,7 @@ export default {
       // console.log(data);
       // 因为失败的情况已经被拦截器拦截，所以只有登录成功才会执行以下代码
       message.success(data.message);
+      store.commit("saveUsername", formData.username);
       router.push("/console");
     };
 
