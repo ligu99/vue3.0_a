@@ -50,11 +50,9 @@
           </a-row>
           <!-- 获取验证码 -->
           <a-form-item :wrapper-col="{ span: 24 }">
-            <a-button
-              block
-              @click="handleGetCode"
-              :disabled="loginData.disabled"
-            >{{ loginData.getCodeText }}</a-button>
+            <a-button block @click="handleGetCode" :disabled="loginData.disabled">{{
+              loginData.getCodeText
+            }}</a-button>
           </a-form-item>
           <a-form-item :wrapper-col="{ span: 24 }">
             <a-button type="primary" block html-type="handleFinish">登录</a-button>
@@ -192,7 +190,7 @@ export default {
         // await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中。
         try {
           let { data } = await getCodeApi({
-            url: "/getSms/",
+            url: "/devApi/getSms/",
             data: {
               username: formData.username,
               module: "login"
@@ -217,7 +215,7 @@ export default {
     // 登录
     let handleFinish = async () => {
       let { data } = await postApi({
-        url: "/login/",
+        url: "/devApi/login/",
         data: formData
       });
       // console.log(data);

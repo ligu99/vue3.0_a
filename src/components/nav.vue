@@ -14,14 +14,14 @@
           <template #title>
             <span>
               <DesktopOutlined />
-              <span>{{item.name}}</span>
+              <span>{{ item.name }}</span>
             </span>
           </template>
-          <a-menu-item v-for="sub in item.list" :key="sub.key">{{sub.name}}</a-menu-item>
+          <a-menu-item v-for="sub in item.list" :key="sub.key">{{ sub.name }}</a-menu-item>
         </a-sub-menu>
         <a-menu-item v-else :key="item.key">
           <DesktopOutlined />
-          <span>{{item.name}}</span>
+          <span>{{ item.name }}</span>
         </a-menu-item>
       </template>
     </a-menu>
@@ -62,8 +62,9 @@ export default {
       }
     ]);
     let router = useRouter();
+    // console.log(router);
     let selectKey = ({ item, key, selectedKeys }) => {
-      console.log(item, key, selectedKeys)
+      console.log(item, key, selectedKeys);
       router.push({ name: key });
     };
     onMounted(() => {
@@ -76,16 +77,16 @@ export default {
           item.list.filter(m => {
             if (m.key === curPath) {
               navKeys.openKeys.push(item.key);
-              navKeys.selectedKeys.push(m.key)
+              navKeys.selectedKeys.push(m.key);
               return m;
             }
-          })
+          });
         } else {
           if (item.key === curPath) {
-            navKeys.selectedKeys.push(item.key)
+            navKeys.selectedKeys.push(item.key);
           }
         }
-      })
+      });
     });
     return {
       navKeys,
