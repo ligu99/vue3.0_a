@@ -12,16 +12,14 @@
       <template v-for="item in menuData">
         <a-sub-menu v-if="item.list" :key="item.key">
           <template #title>
-            <span>
-              <DesktopOutlined />
-              <span>{{ item.name }}</span>
-            </span>
+            <i :class="[item.icon,'iconv']"></i>
+            <span class="itemname">{{ item.name }}</span>
           </template>
           <a-menu-item v-for="sub in item.list" :key="sub.key">{{ sub.name }}</a-menu-item>
         </a-sub-menu>
         <a-menu-item v-else :key="item.key">
-          <DesktopOutlined />
-          <span>{{ item.name }}</span>
+          <i :class="[item.icon,'iconv']"></i>
+          <span class="itemname">{{ item.name }}</span>
         </a-menu-item>
       </template>
     </a-menu>
@@ -29,12 +27,11 @@
 </template>
 
 <script>
-import { DesktopOutlined } from '@ant-design/icons-vue';
 import { reactive, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 export default {
   components: {
-    DesktopOutlined
+
   },
   setup() {
     let navKeys = reactive({
@@ -43,10 +40,11 @@ export default {
       collapsed: false
     });
     let menuData = reactive([
-      { name: "首页", key: "Console.index" },
+      { name: "首页", key: "Console.index", icon: "icon-shouye" },
       {
         name: "用户管理",
         key: "user",
+        icon: "icon-wodeguanzhu",
         list: [
           { name: "用户首页", key: "User.index" },
           { name: "用户列表", key: "User.userlist" }
@@ -55,6 +53,7 @@ export default {
       {
         name: "消息管理",
         key: "mes",
+        icon: "icon-pinglun",
         list: [
           { name: "消息首页", key: "Mse.index" },
           { name: "消息列表", key: "Mse.userlist" }
@@ -97,5 +96,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.iconv {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.itemname {
+  vertical-align: middle;
+}
 </style>

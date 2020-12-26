@@ -1,0 +1,21 @@
+@mixin icon-style() {
+    content: ' ';
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat
+}
+
+.icon-wodeguanzhu {
+    @include icon-style();
+    background-image: url(~@/assets/icons/wodeguanzhu.svg);
+}
+.icon-pinglun{
+    @include icon-style();
+    background-image: url(~@/assets/icons/pinglun.svg);
+}
+.icon-shouye {
+    @include icon-style();
+    background-image: url(~@/assets/icons/shouye.svg);
+}
