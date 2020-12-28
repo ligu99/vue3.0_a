@@ -1,12 +1,14 @@
 <template>
-  <div>用户管理首页</div>
+  <div>dataIndex</div>
 </template>
 
 <script>
 export default {
   components: {
   },
-  setup() { }
+  setup() {
+
+  }
 }
 </script>
 
