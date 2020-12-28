@@ -6,7 +6,10 @@
       </a-layout-sider>
       <a-layout>
         <a-layout-header>
-          <div class="name">{{username}}</div>
+          <div class="name">
+            {{ username }}
+            <span @click="loginOut">退出</span>
+          </div>
         </a-layout-header>
         <a-layout-content>
           <router-view></router-view>
@@ -21,6 +24,8 @@
 import navmenu from "@/components/nav.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { removeCookie } from "@/utils/cookie.js";
+import { useRouter } from "vue-router";
 export default {
   components: {
     navmenu
@@ -28,8 +33,14 @@ export default {
   setup() {
     let store = useStore();
     let username = computed(() => store.state.username);
+    let router = useRouter();
+    let loginOut = () => {
+      removeCookie();
+      router.push("/login");
+    };
     return {
-      username
+      username,
+      loginOut
     };
   }
 }
@@ -53,6 +64,11 @@ export default {
     background: #f0f2f5;
     .name {
       float: right;
+      span {
+        padding-left: 10px;
+        cursor: pointer;
+        color: #58bc58;
+      }
     }
   }
   .ant-layout-content {

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { getCookie } from "@/utils/cookie.js";
 // import Home from '../views/Home.vue';
 const Layout = () =>import(/* webpackeChunkName: "layout" */ '@/views/Layout/layout.vue');
 const routes = [
@@ -96,6 +97,22 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  // console.log(to, from, next)
+  if (to.path === "/login") { 
+    next();//next()默认指向to的参数
+  } else {
+    //进入非登陆页，校验是否有token
+    console.log(getCookie())
+    if (getCookie()) {
+      // 可以在这里请求接口校验token
+      next();
+    } else {
+      next({ path: '/login' });
+    }
+  }
 });
 
 export default router;

@@ -66,11 +66,9 @@
         </a-row>
         <!-- 获取验证码 -->
         <a-form-item :wrapper-col="{ span: 24 }">
-          <a-button
-            block
-            @click="handleGetCode"
-            :disabled="regData.disabled"
-          >{{ regData.getCodeText }}</a-button>
+          <a-button block @click="handleGetCode" :disabled="regData.disabled">{{
+            regData.getCodeText
+          }}</a-button>
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 24 }">
           <a-button type="primary" block html-type="handleFinish">注册</a-button>
@@ -137,7 +135,7 @@ export default {
       if (reg.test(formData.username)) {
         regData.isLoading = true;
         let { data } = await getCodeApi({
-          url: "	/getSms/",
+          url: "/devApi/getSms/",
           data: {
             username: formData.username,
             module: "register"
@@ -153,20 +151,20 @@ export default {
     };
     // 注册
     let handleFinish = async () => {
-      console.log(1)
+      console.log(1);
       let { data } = await postApi({
-        url: "/register/",
+        url: "/devApi//register/",
         data: {
           username: formData.username,
           password: formData.password,
           code: formData.code
         }
       });
-      console.log(data)
+      console.log(data);
       if (data.resCode === 0) {
         message.success("注册成功！！");
       }
-    }
+    };
     // 去登录
     let toLogin = () => {
       context.emit("update:changeDisplayValue", "login");
@@ -192,7 +190,7 @@ export default {
       } else {
         return Promise.reject("重复密码输入有误");
       }
-    }
+    };
     //验证规则
     let rules = reactive({
       username: [{ validator: validateUsername, trigger: "blur" }],
