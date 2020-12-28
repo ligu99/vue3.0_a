@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { getCookie } from "@/utils/cookie.js";
 // import Home from '../views/Home.vue';
-const Layout = () =>import(/* webpackeChunkName: "layout" */ '@/views/Layout/layout.vue');
+const Layout = () => import(/* webpackeChunkName: "layout" */ '@/views/Layout/layout.vue');
 const routes = [
   // {
   //   path: '/',
@@ -21,7 +21,7 @@ const routes = [
     path: '/console',
     name: 'Console',
     // component: () => import(/* webpackChunkName: "console" */ '@/views/Layout/layout.vue'),
-    component:Layout,
+    component: Layout,
     children: [
       {
         path: 'index',
@@ -38,7 +38,7 @@ const routes = [
     path: '/user',
     name: 'User',
     // component: () => import(/* webpackChunkName: "User" */ '@/views/Layout/layout.vue'),
-    component:Layout,
+    component: Layout,
     children: [
       {
         path: 'index',
@@ -56,7 +56,7 @@ const routes = [
     path: '/mse',
     name: 'Mse',
     // component: () => import(/* webpackChunkName: "Mse" */ '@/views/Layout/layout.vue'),
-    component:Layout,
+    component: Layout,
     children: [
       {
         path: 'index',
@@ -101,11 +101,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   // console.log(to, from, next)
-  if (to.path === "/login") { 
+  if (to.path === "/login") {
     next();//next()默认指向to的参数
   } else {
     //进入非登陆页，校验是否有token
-    console.log(getCookie())
+    // console.log(getCookie())
     if (getCookie()) {
       // 可以在这里请求接口校验token
       next();
