@@ -35,7 +35,7 @@ export default {
     let username = computed(() => store.state.username);
     let router = useRouter();
     let loginOut = () => {
-      removeCookie();
+      removeCookie("Authorization");
       router.push("/login");
     };
     return {
@@ -72,7 +72,9 @@ export default {
     }
   }
   .ant-layout-content {
-    min-height: calc(100% - 134px);
+    min-height: calc(100% - 135px);
+    padding: 20px;
+    background: #fff;
   }
   .ant-layout-footer {
     border-top: 1px solid #ccc;

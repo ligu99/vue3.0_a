@@ -222,7 +222,7 @@ export default {
       // console.log(data);
       // 因为失败的情况已经被拦截器拦截，所以只有登录成功才会执行以下代码
       message.success(data.message);
-      setCookie(data.data.username);
+      setCookie("Authorization", data.data.username);
       store.commit("saveUsername", formData.username);
       router.push("/console");
     };

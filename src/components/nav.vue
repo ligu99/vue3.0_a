@@ -6,19 +6,18 @@
       v-model:openKeys="navKeys.openKeys"
       mode="inline"
       theme="dark"
-      :inlineCollapsed="navKeys.collapsed"
       @select="selectKey"
     >
       <template v-for="item in menuData">
         <a-sub-menu v-if="item.list" :key="item.key">
           <template #title>
-            <i :class="[item.icon,'iconv']"></i>
+            <i :class="[item.icon, 'iconv']"></i>
             <span class="itemname">{{ item.name }}</span>
           </template>
           <a-menu-item v-for="sub in item.list" :key="sub.key">{{ sub.name }}</a-menu-item>
         </a-sub-menu>
         <a-menu-item v-else :key="item.key">
-          <i :class="[item.icon,'iconv']"></i>
+          <i :class="[item.icon, 'iconv']"></i>
           <span class="itemname">{{ item.name }}</span>
         </a-menu-item>
       </template>
@@ -36,8 +35,7 @@ export default {
   setup() {
     let navKeys = reactive({
       selectedKeys: [],
-      openKeys: [],
-      collapsed: false
+      openKeys: []
     });
     let menuData = reactive([
       { name: "首页", key: "Console.index", icon: "icon-shouye" },
@@ -58,12 +56,21 @@ export default {
           { name: "消息首页", key: "Mse.index" },
           { name: "消息列表", key: "Mse.userlist" }
         ]
+      },
+      {
+        name: "新闻管理",
+        key: "news",
+        icon: "icon-xinwen",
+        list: [
+          { name: "新闻首页", key: "News.index" },
+          { name: "新闻列表", key: "News.newslist" }
+        ]
       }
     ]);
     let router = useRouter();
     // console.log(router);
-    let selectKey = ({ item, key, selectedKeys }) => {
-      console.log(item, key, selectedKeys);
+    let selectKey = ({ key }) => {
+      // console.log(item, key, selectedKeys);
       router.push({ name: key });
     };
     onMounted(() => {

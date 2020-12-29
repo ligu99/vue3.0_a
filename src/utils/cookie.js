@@ -22,17 +22,17 @@ cookies.remove（'name'，{path:'}）；//remove！
  */
 
 import Cookies from 'js-cookie';
-const setCookie=(value)=>{
-    Cookies.set('Authorization', value,{expires:7});
+const setCookie=(name,value)=>{
+    Cookies.set(name, value,{expires:7});
     return true;
 };
 
-const getCookie=()=>{
-    return Cookies.get('Authorization');
+const getCookie=(name)=>{
+    return Cookies.get(name);
 };
 
-const removeCookie=()=>{
-    Cookies.remove('Authorization');
+const removeCookie=(name)=>{
+    Cookies.remove(name);
     return true;
  };
 

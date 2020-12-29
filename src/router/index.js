@@ -48,7 +48,25 @@ const routes = [
       {
         path: 'userlist',
         name: "User.userlist",
-        component: () => import(/* webpackChunkName: "user.user" */ '@/views/Usermanage/user.vue'),
+        component: () => import(/* webpackChunkName: "user.userlist" */ '@/views/Usermanage/user.vue'),
+      }
+    ]
+  },
+  {
+    path: '/news',
+    name: 'News',
+    // component: () => import(/* webpackChunkName: "News" */ '@/views/Layout/layout.vue'),
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: "News.index",
+        component: () => import(/* webpackChunkName: "News.index" */ '@/views/Newsmanage/index.vue'),
+      },
+      {
+        path: 'newslist',
+        name: "News.newslist",
+        component: () => import(/* webpackChunkName: "News.newslist" */ '@/views/Newsmanage/news.vue'),
       }
     ]
   },
@@ -61,12 +79,12 @@ const routes = [
       {
         path: 'index',
         name: "Mse.index",
-        component: () => import(/* webpackChunkName: "mse.index" */ '@/views/Msemanage/index.vue'),
+        component: () => import(/* webpackChunkName: "Mse.index" */ '@/views/Msemanage/index.vue'),
       },
       {
         path: 'meslist',
         name: "Mse.userlist",
-        component: () => import(/* webpackChunkName: "mse.mse" */ '@/views/Msemanage/mse.vue'),
+        component: () => import(/* webpackChunkName: "Mse.userlist" */ '@/views/Msemanage/mse.vue'),
       }
     ]
   },
@@ -101,12 +119,14 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   // console.log(to, from, next)
-  if (to.path === "/login") {
+  if (to.path === "/login" && getCookie("Authorization")) {
+    next({ path: '/console' });
+  } else if (to.path === "/login" && !getCookie("Authorization")) {
     next();//next()默认指向to的参数
   } else {
     //进入非登陆页，校验是否有token
     // console.log(getCookie())
-    if (getCookie()) {
+    if (getCookie("Authorization")) {
       // 可以在这里请求接口校验token
       next();
     } else {
