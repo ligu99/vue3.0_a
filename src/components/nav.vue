@@ -54,7 +54,7 @@ export default {
         icon: "icon-pinglun",
         list: [
           { name: "消息首页", key: "Mse.index" },
-          { name: "消息列表", key: "Mse.userlist" }
+          { name: "消息列表", key: "Mse.meslist" }
         ]
       },
       {

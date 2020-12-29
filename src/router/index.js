@@ -83,8 +83,8 @@ const routes = [
       },
       {
         path: 'meslist',
-        name: "Mse.userlist",
-        component: () => import(/* webpackChunkName: "Mse.userlist" */ '@/views/Msemanage/mse.vue'),
+        name: "Mse.meslist",
+        component: () => import(/* webpackChunkName: "Mse.meslist" */ '@/views/Msemanage/mse.vue'),
       }
     ]
   },
