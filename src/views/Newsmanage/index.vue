@@ -18,16 +18,34 @@
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive, onMounted, getCurrentInstance } from "vue";
+import { postApi } from "@/api/base.js";
 export default {
   components: {
   },
   setup() {
+    onMounted(() => {
+      const { proxy } = getCurrentInstance();
+      console.log(proxy);
+      getNewsData();
+    });
     let formData = reactive({
       name: ""
     });
+
+    let getNewsData = async () => {
+      let { data } = await postApi({
+        url: "/news/getList/",
+        data: {
+          pageNumber: 1,
+          pageSize: 10
+        }
+      });
+      console.log(data);
+    };
     return {
-      formData
+      formData,
+      getNewsData
     };
   }
 }

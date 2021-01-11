@@ -28,7 +28,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/devApi': {
-        target: 'http://www.web-jshtml.cn/productapi',
+        target: 'http://www.web-jshtml.cn/api/vue3',
         changeOrigin: true, //允许跨域
         pathRewrite: {
           '^/devApi': ''

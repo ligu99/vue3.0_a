@@ -1,6 +1,6 @@
 import axios from "axios";
 // import { message } from "ant-design-vue";
-
+import { getCookie } from "@/utils/cookie";
 const isDev = process.env.NODE_ENV === 'development';
 
 // const baseUrl = isDev ? '/devApi' : 'http://119.23.142.232:12032/devApi';
@@ -19,6 +19,9 @@ instance.interceptors.request.use(function (config) {
     // console.log("config", config);
     // 添加请求头测试
     // config.headers["Testaddhed"] = "Testaddhed";
+    // 请求头添加token
+    config.headers["Tokey"] = getCookie('Authorization');
+    config.headers['UserName'] = getCookie('username');
     return config;
 }, function (error) {
     // 对请求错误做些什么

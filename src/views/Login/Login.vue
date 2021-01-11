@@ -192,7 +192,7 @@ export default {
         // await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中。
         try {
           let { data } = await getCodeApi({
-            url: "/devApi/getSms/",
+            url: "/devApi/getCode/",
             data: {
               username: formData.username,
               module: "login"
@@ -223,7 +223,7 @@ export default {
       // console.log(data);
       // 因为失败的情况已经被拦截器拦截，所以只有登录成功才会执行以下代码
       message.success(data.message);
-      setCookie("Authorization", data.data.username);
+      setCookie("Authorization", data.data.token);
       store.commit("saveUsername", formData.username);
       router.push("/console");
     };

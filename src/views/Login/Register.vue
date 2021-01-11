@@ -88,7 +88,8 @@ import {
   SafetyCertificateOutlined
 } from "@ant-design/icons-vue";
 import { validateUsername, validatePassword, RegCode } from "@/utils/validate";
-import { getCodeApi, postApi } from "@/api/login";
+import { getCodeApi } from "@/api/login";
+import { postApi } from "@/api/base";
 
 export default {
   components: {

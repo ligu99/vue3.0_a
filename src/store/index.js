@@ -10,7 +10,8 @@ export default createStore({
       state.selectedKey = key;
     },
     saveUsername(state, value) {
-      setCookie("username",value)
+      state.username = value;
+      setCookie("username", value);
     }
   },
   actions: {},
