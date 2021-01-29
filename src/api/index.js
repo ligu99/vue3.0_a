@@ -1,6 +1,8 @@
 import axios from "axios";
 // import { message } from "ant-design-vue";
 import { getCookie } from "@/utils/cookie";
+// import router from '../router/index';
+
 const isDev = process.env.NODE_ENV === 'development';
 
 // const baseUrl = isDev ? '/devApi' : 'http://119.23.142.232:12032/devApi';
@@ -32,13 +34,15 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     // let { data } = response;
-    // if (data.resCode !== 0) {
+    // if (data.resCode == 401) {//登录过期，跳转到登录
+    //     router.push("/login");
+    // } else if(data.resCode !== 0){
     //     message.error(data.message);
     //     return Promise.reject(data);
-    // } else {
+    // }
+    // else {
     //     return response;
     // }
-
     return response;
 }, function (error) {
     // 对响应错误做点什么
